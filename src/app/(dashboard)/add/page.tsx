@@ -1,8 +1,9 @@
 'use client'
 
+import { useFooterText } from '@/contexts/FooterTextContext'
 import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export type DiscogSearchResult = {
   id: string
@@ -22,6 +23,7 @@ async function searchDiscogs(query: string) {
 export default function AddRecord() {
   const [searchQuery, setSearchQuery] = useState('')
   const [debouncedQuery, setDebouncedQuery] = useState('')
+  const { setFooterText } = useFooterText()
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['discogs', debouncedQuery],
@@ -32,7 +34,11 @@ export default function AddRecord() {
   const handleSearch = () => {
     setDebouncedQuery(searchQuery)
   }
-  console.log('data?.results', data?.results)
+
+  useEffect(() => {
+    setFooterText("Add a vinyl album to your collection.")
+  }, [setFooterText])
+
   return (
     <div className="p-8">
       <input

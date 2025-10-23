@@ -1,13 +1,16 @@
 'use client'
 
+import { useFooterText } from "@/contexts/FooterTextContext"
 import useTypewriter from "@/hooks/useTypewriter"
+import { useEffect } from "react"
 
-export interface LayoutFooterProps {
-  displayText: string
-}
+export default function LayoutFooter() {
+  const { footerText, setIsTyping } = useFooterText()
+  const [typedText, isTyping] = useTypewriter(footerText, 30)
 
-export default function LayoutFooter({displayText}: LayoutFooterProps) {
-  const typedText = useTypewriter(displayText, 30)
+  useEffect(() => {
+    setIsTyping(isTyping)
+  }, [isTyping, setIsTyping])
 
   return (
     <footer className="col-span-3 bg-green-200 w-full py-4">

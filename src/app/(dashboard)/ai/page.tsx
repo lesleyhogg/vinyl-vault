@@ -1,5 +1,6 @@
 'use client'
 
+import { useFooterText } from '@/contexts/FooterTextContext'
 import Image from "next/image"
 import { useEffect, useState } from "react"
 import girlQuiet from '../../../../public/anime-girl-silent.png'
@@ -7,8 +8,12 @@ import girlTalking from '../../../../public/anime-girl-talking.png'
 import background from '../../../../public/bedroom.png'
 
 export default function AIChat() {
-  const isTyping = true
-    const [mouthOpen, setMouthOpen] = useState(false)
+  const { setFooterText, isTyping } = useFooterText()
+  const [mouthOpen, setMouthOpen] = useState(false)
+
+  useEffect(() => {
+    setFooterText("Welcome to the AI assistant. I'm Claudia!")
+  }, [setFooterText])
 
   useEffect(() => {
     if (!isTyping) {
@@ -18,7 +23,7 @@ export default function AIChat() {
 
     const interval = setInterval(() => {
       setMouthOpen(prev => !prev)
-    }, 200)
+    }, 150)
 
     return () => clearInterval(interval)
   }, [isTyping])
@@ -29,6 +34,7 @@ export default function AIChat() {
       <Image 
         src={girlQuiet}
         alt="AI Character"
+        priority
         className={`absolute bottom-0 right-20 w-auto transition-opacity duration-0 ${mouthOpen ? 'opacity-0' : 'opacity-100'}`}
       />
       <Image 
@@ -36,7 +42,6 @@ export default function AIChat() {
         alt="AI Character talking"
         className={`absolute bottom-0 right-20 w-auto transition-opacity duration-0 ${mouthOpen ? 'opacity-100' : 'opacity-0'}`}
       />
-      {/* <Image src={girlTalking} alt="anime girl quiet" className=" w-auto absolute bottom-0 right-20" /> */}
     </div>
   )
 }

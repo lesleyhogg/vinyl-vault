@@ -1,24 +1,28 @@
 import { useEffect, useState } from "react";
 
-export default function useTypewriter(text: string, speed: number = 50) {
-  const [displayText, setDisplayText] = useState('')
+export default function useTypewriter(text?: string, speed?: number) {
+  const [typedText, setTypedText] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isTyping, setIsTyping] = useState(false)
 
   useEffect(() => {
-    setDisplayText('')
+    setTypedText('')
     setCurrentIndex(0)
+    setIsTyping(true)
   }, [text])
 
   useEffect(() => {
-    if (currentIndex < text.length) {
+    if (text && currentIndex < text.length) {
       const timeout = setTimeout(() => {
-        setDisplayText(prev => prev + text[currentIndex])
+        setTypedText(prev => prev + text[currentIndex])
         setCurrentIndex(prev => prev + 1)
       }, speed)
 
       return () => clearTimeout(timeout)
+    } else if (text && currentIndex >= text.length) {
+      setIsTyping(false)
     }
   }, [currentIndex, text, speed])
 
-  return displayText
+  return [typedText, isTyping] as const
 }

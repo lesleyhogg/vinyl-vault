@@ -1,6 +1,14 @@
 'use client'
 
+import { useFooterText } from "@/contexts/FooterTextContext"
+import { useEffect } from "react"
+
 export default function Collection() {
+  const { setFooterText } = useFooterText()
+  
+  useEffect(() => {
+    setFooterText("Welcome back! Testing this thing out! What would you like to do?")
+  }, [setFooterText])
 
   return (
     <div className='p-10'>
