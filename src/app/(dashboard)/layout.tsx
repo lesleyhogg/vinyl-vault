@@ -18,7 +18,7 @@ export default function DashboardLayout ({children}: DashboardLayoutProps) {
             </div>
           </div>
         </main>
-        <LayoutFooter />
+        <LayoutFooter displayText='Welcome back! Testing this thing out! What would you like to do?' />
       </div>
       <LayoutRight />
     </div>

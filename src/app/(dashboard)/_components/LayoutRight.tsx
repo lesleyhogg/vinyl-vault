@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
+import NavButton from './NavButton'
 
 export default function LayoutRight() {
   const router = useRouter()
@@ -33,11 +34,11 @@ export default function LayoutRight() {
           </div>
         </div>
       </div>
-      <div className="border-2 rounded-lg p-4 grid grid-cols-2 gap-4 mx-10 mt-10 mb-2">
-        <button onClick={handleView} className="px-6 py-4 rounded-lg border-2 w-full text-center">View</button>
-        <button onClick={handleAdd} className="px-6 py-4 rounded-lg border-2 w-full text-center">Add</button>
-        <button onClick={handleAI} className="px-6 py-4 rounded-lg border-2 w-full text-center">AI</button>
-        <button onClick={handleLogout}className="px-6 py-4 rounded-lg border-2 w-full text-center">Logout</button>
+      <div className="border-2 rounded-lg py-4 pl-4 pr-5 grid grid-cols-2 gap-4 mx-10 mt-10 mb-2 text-lg font-semibold font-[family-name:var(--font-vt323)]">
+        <NavButton handleOnClick={handleView} label='View' />
+        <NavButton handleOnClick={handleAdd} label='Add' />
+        <NavButton handleOnClick={handleAI} label='AI' />
+        <NavButton handleOnClick={handleLogout} label='AI' />
       </div>
     </aside>
   )
