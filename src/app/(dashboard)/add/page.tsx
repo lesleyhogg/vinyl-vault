@@ -4,6 +4,15 @@ import { useQuery } from '@tanstack/react-query'
 import Image from 'next/image'
 import { useState } from 'react'
 
+export type DiscogSearchResult = {
+  id: string
+  thumb: string
+  title: string
+  year: string
+  label: string
+  country: string
+}
+
 async function searchDiscogs(query: string) {
   const response = await fetch(`/api/discogs/search?q=${encodeURIComponent(query)}`)
   if (!response.ok) throw new Error('Search failed')
@@ -42,8 +51,8 @@ export default function AddRecord() {
       {error && <p>Error: {error.message}</p>}
 
       <div className="grid grid-cols-2 gap-2 mt-4 space-y-2">
-        {data?.results?.map((album: any) => (
-          <div key={album.id} className="border p-4 rounded">
+        {data?.results?.map((album: DiscogSearchResult) => (
+          <div key={album.id} className="border p-4 rounded flex flex-row">
             <Image src={album.thumb} alt={album.title} width={48} height={48} className="w-24 h-24 inline-block mr-4" />
             <div className="inline-block">
               <p className="font-bold">{album.title}</p>
