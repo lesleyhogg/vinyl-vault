@@ -1,3 +1,4 @@
+import QueryProvider from "@/providers/QueryProvider";
 import type { Metadata } from "next";
 import { DotGothic16, Press_Start_2P, VT323 } from "next/font/google";
 import "./globals.css";
@@ -35,7 +36,9 @@ export default function RootLayout({
       <body
         className={`${dotGothic16.className} ${dotGothic16.variable} ${pressStart.className} ${pressStart.variable} ${vt323.className} ${vt323.variable} antialiased`}
       >
-        {children}
+        <QueryProvider>
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );
