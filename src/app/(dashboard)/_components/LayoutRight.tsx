@@ -1,12 +1,13 @@
 'use client'
 
 import { createClient } from '@/lib/supabase'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import NavButton from './NavButton'
 
 export default function LayoutRight() {
   const router = useRouter()
   const supabase = createClient()
+  const pathname = usePathname()
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
@@ -34,11 +35,11 @@ export default function LayoutRight() {
           </div>
         </div>
       </div>
-      <div className="border-2 rounded-lg py-4 pl-4 pr-5 grid grid-cols-2 gap-4 mx-10 mt-10 mb-2 text-lg font-semibold font-[family-name:var(--font-vt323)]">
-        <NavButton handleOnClick={handleView} label='View' />
-        <NavButton handleOnClick={handleAdd} label='Add' />
-        <NavButton handleOnClick={handleAI} label='AI' />
-        <NavButton handleOnClick={handleLogout} label='AI' />
+      <div className="border-2 rounded-lg py-4 pl-4 pr-5 grid grid-cols-2 gap-4 mx-10 mt-10 mb-2">
+        <NavButton handleOnClick={handleView} isCurrentPathname={pathname === '/collection'} label='View' />
+        <NavButton handleOnClick={handleAdd} isCurrentPathname={pathname === '/add'} label='Add' />
+        <NavButton handleOnClick={handleAI} isCurrentPathname={pathname === '/ai'} label='AI' />
+        <NavButton handleOnClick={handleLogout} label='Logout' />
       </div>
     </aside>
   )

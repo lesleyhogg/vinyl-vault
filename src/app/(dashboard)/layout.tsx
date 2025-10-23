@@ -1,3 +1,7 @@
+'use client'
+
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 import LayoutFooter from "./_components/LayoutFooter"
 import LayoutRight from "./_components/LayoutRight"
 
@@ -6,6 +10,22 @@ export interface DashboardLayoutProps {
 }
 
 export default function DashboardLayout ({children}: DashboardLayoutProps) {
+  const [footerText, setFooterText] = useState('')
+  const pathname = usePathname()
+
+  useEffect(() => {
+    if (pathname === '/collection') {
+      return setFooterText('Welcome back! Testing this thing out! What would you like to do?')
+    }
+    if (pathname === '/add') {
+      return setFooterText('Add a vinyl album to your collection.')
+    }
+    if (pathname === '/ai') {
+      return setFooterText('Welcome to the AI assistant. I\'m Claudia!')
+    }
+    return setFooterText('')
+  }, [pathname])
+
   return(
     <div className="min-h-screen grid grid-cols-[4rem_1fr_30rem] grid-rows-[2rem_1fr]">
       <header className="col-span-3 bg-green-200" />
@@ -18,7 +38,7 @@ export default function DashboardLayout ({children}: DashboardLayoutProps) {
             </div>
           </div>
         </main>
-        <LayoutFooter displayText='Welcome back! Testing this thing out! What would you like to do?' />
+        <LayoutFooter displayText={footerText} />
       </div>
       <LayoutRight />
     </div>
