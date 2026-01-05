@@ -7,6 +7,8 @@ interface FooterTextContextType {
   setFooterText: (text: string) => void
   isTyping: boolean
   setIsTyping: (typing: boolean) => void
+  enableFooterInput: boolean
+  setEnableFooterInput: (enableInput: boolean) => void
 }
 
 const FooterTextContext = createContext<FooterTextContextType | undefined>(undefined)
@@ -14,9 +16,10 @@ const FooterTextContext = createContext<FooterTextContextType | undefined>(undef
 export function FooterTextProvider({ children }: { children: ReactNode }) {
   const [footerText, setFooterText] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [enableFooterInput, setEnableFooterInput] = useState(false)
   
   return (
-    <FooterTextContext.Provider value={{ footerText, setFooterText, isTyping, setIsTyping }}>
+    <FooterTextContext.Provider value={{ footerText, setFooterText, isTyping, setIsTyping, enableFooterInput, setEnableFooterInput }}>
       {children}
     </FooterTextContext.Provider>
   )

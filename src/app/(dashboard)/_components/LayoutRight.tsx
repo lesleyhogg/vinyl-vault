@@ -1,5 +1,6 @@
 'use client'
 
+import { useFooterText } from '@/contexts/FooterTextContext'
 import { createClient } from '@/lib/supabase'
 import { usePathname, useRouter } from 'next/navigation'
 import NavButton from './NavButton'
@@ -8,22 +9,27 @@ export default function LayoutRight() {
   const router = useRouter()
   const supabase = createClient()
   const pathname = usePathname()
+  const { setEnableFooterInput } = useFooterText()
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
     router.push('/login')
+    setEnableFooterInput(false)
   }
 
   const handleAdd = async () => {
     router.push('/add')
+    setEnableFooterInput(false)
   }
 
   const handleView = async () => {
     router.push('/collection')
+    setEnableFooterInput(false)
   }
 
   const handleAI = async () => {
     router.push('/ai')
+    setEnableFooterInput(false)
   }
 
   return (
