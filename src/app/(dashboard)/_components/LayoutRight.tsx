@@ -16,6 +16,27 @@ export default function LayoutRight() {
   const { data: vinylData } = useVinylCollection();
   const totalAlbums = vinylData?.length || 0;
 
+  const allGenres =
+    vinylData
+      ?.flatMap((vinyls) => vinyls.styles)
+      ?.reduce((acc, style) => {
+        acc[style] = (acc[style] || 0) + 1;
+        return acc;
+      }, {}) || {};
+  const topGenre = (Object.entries(allGenres) as [string, number][]).sort(
+    (a, b) => b[1] - a[1]
+  )?.[0]?.[0];
+  const allArtists =
+    vinylData
+      ?.flatMap((vinyls) => vinyls.artist)
+      ?.reduce((acc, artist) => {
+        acc[artist] = (acc[artist] || 0) + 1;
+        return acc;
+      }, {}) || {};
+  const topArtist = (Object.entries(allArtists) as [string, number][]).sort(
+    (a, b) => b[1] - a[1]
+  )?.[0]?.[0];
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     router.push("/login");
@@ -47,8 +68,8 @@ export default function LayoutRight() {
               <p>{user?.user_metadata.display_name}</p>
             </div>
             <p>Collection total: {totalAlbums}</p>
-            <p>Top genre: X</p>
-            <p>Top artist: X</p>
+            <p>Top genre: {topGenre}</p>
+            <p>Top artist: {topArtist}</p>
           </div>
         </div>
       </div>

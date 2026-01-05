@@ -44,6 +44,7 @@ export default function AddRecord() {
     mutate: fetchAllAlbums,
     isPending: isLoadingAllAlbums,
     error: errorAllAlbums,
+    reset: resetAllAlbums,
   } = useMutation({
     mutationFn: (query: string) => searchDiscogs(query),
   });
@@ -57,20 +58,17 @@ export default function AddRecord() {
     mutationFn: (id: string) => getReleaseDetails(id),
   });
 
-  const {
-    mutate: saveAlbum,
-    isPending: isSaving,
-    error: saveError,
-  } = useMutation({
+  const { mutate: saveAlbum, isPending: isSaving } = useMutation({
     mutationFn: () => saveAlbumToCollection(albumData, user!.id),
     onSuccess: () => {
       setFooterText("Album added to your collection!");
       setAlbumID("");
       setSearchQuery("");
+      resetAllAlbums();
     },
     onError: (e) => console.log(e),
   });
-  console.log("saveError", saveError);
+
   const handleSearch = () => {
     setAlbumID("");
     setFooterText(`Searching albums...`);
