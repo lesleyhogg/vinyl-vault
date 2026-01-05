@@ -8,7 +8,7 @@ export interface AlbumDetailsProps {
     released_formatted: string;
     country: string;
     images: {
-      resource_url: string;
+      uri: string;
       height: number;
       width: number;
     }[];
@@ -36,7 +36,7 @@ export default function AlbumDetails({
   return (
     <div className="flex flex-col gap-2 items-center">
       <Image
-        src={data?.images[0]?.resource_url}
+        src={data?.images[0]?.uri}
         alt={data.title}
         width={data.images[0].width}
         height={data.images[0].height}

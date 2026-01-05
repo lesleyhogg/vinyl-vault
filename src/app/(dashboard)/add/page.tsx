@@ -1,6 +1,8 @@
 "use client";
 
 import { useFooterText } from "@/contexts/FooterTextContext";
+import { useUser } from "@/hooks/useUser";
+import { saveAlbumToCollection } from "@/queries/saveAlbum";
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -35,7 +37,8 @@ export default function AddRecord() {
   const [searchQuery, setSearchQuery] = useState("");
   const [albumID, setAlbumID] = useState("");
   const { setFooterText, setEnableFooterInput } = useFooterText();
-  console.log("albumID", albumID);
+  const { data: user } = useUser();
+
   const {
     data: allAlbumsData,
     mutate: fetchAllAlbums,
@@ -54,8 +57,20 @@ export default function AddRecord() {
     mutationFn: (id: string) => getReleaseDetails(id),
   });
 
-  // console.log("allAlbumsData.results", allAlbumsData?.results);
-  console.log("albumData", albumData);
+  const {
+    mutate: saveAlbum,
+    isPending: isSaving,
+    error: saveError,
+  } = useMutation({
+    mutationFn: () => saveAlbumToCollection(albumData, user!.id),
+    onSuccess: () => {
+      setFooterText("Album added to your collection!");
+      setAlbumID("");
+      setSearchQuery("");
+    },
+    onError: (e) => console.log(e),
+  });
+  console.log("saveError", saveError);
   const handleSearch = () => {
     setAlbumID("");
     setFooterText(`Searching albums...`);
@@ -72,6 +87,10 @@ export default function AddRecord() {
     fetchAlbumDetails(id);
     setFooterText(`Add ${title} to your collection?`);
     setEnableFooterInput(true);
+  };
+
+  const handleAddAlbum = () => {
+    saveAlbum();
   };
 
   return (
@@ -97,11 +116,22 @@ export default function AddRecord() {
       {errorAllAlbums && <p>Error: {errorAllAlbums.message}</p>}
 
       {albumID ? (
-        <AlbumDetails
-          data={albumData}
-          isLoading={isLoadingAlbum}
-          error={errorAlbum}
-        />
+        <div className="flex flex-col gap-2">
+          <AlbumDetails
+            data={albumData}
+            isLoading={isLoadingAlbum}
+            error={errorAlbum}
+          />
+          {!isLoadingAlbum && (
+            <button
+              onClick={handleAddAlbum}
+              className="self-center px-5 py-4 bg-green-100 border border-black rounded-lg"
+              disabled={isSaving}
+            >
+              {isSaving ? "Saving..." : "Add to collection"}
+            </button>
+          )}
+        </div>
       ) : (
         <div className="grid grid-cols-2 gap-2 mt-4 space-y-2">
           {allAlbumsData?.results?.map((album: DiscogSearchResult) => (

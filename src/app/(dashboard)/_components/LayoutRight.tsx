@@ -2,6 +2,7 @@
 
 import { useFooterText } from "@/contexts/FooterTextContext";
 import { useUser } from "@/hooks/useUser";
+import { useVinylCollection } from "@/hooks/useVinylCollection";
 import { createClient } from "@/lib/supabase";
 import { usePathname, useRouter } from "next/navigation";
 import NavButton from "./NavButton";
@@ -11,7 +12,9 @@ export default function LayoutRight() {
   const supabase = createClient();
   const pathname = usePathname();
   const { setEnableFooterInput } = useFooterText();
-  const { data: userData } = useUser();
+  const { data: user } = useUser();
+  const { data: vinylData } = useVinylCollection();
+  const totalAlbums = vinylData?.length || 0;
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -33,7 +36,7 @@ export default function LayoutRight() {
     router.push("/ai");
     setEnableFooterInput(false);
   };
-  console.log("userData", userData);
+
   return (
     <aside className="overflow-y-auto px-4 pb-4 flex flex-col gap-4 bg-green-200">
       <div className="border-4 rounded-lg border-gray-700 w-full h-full">
@@ -41,9 +44,9 @@ export default function LayoutRight() {
           <div className="rounded bg-gray-900 text-green-100 p-8 w-full h-full">
             <div className="flex flex-col items-center">
               <div>profile pic goes here</div>
-              <p>{userData?.user_metadata.display_name}</p>
+              <p>{user?.user_metadata.display_name}</p>
             </div>
-            <p>Collection total: X</p>
+            <p>Collection total: {totalAlbums}</p>
             <p>Top genre: X</p>
             <p>Top artist: X</p>
           </div>
