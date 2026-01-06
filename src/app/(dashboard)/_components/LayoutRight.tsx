@@ -13,7 +13,7 @@ export default function LayoutRight() {
   const pathname = usePathname();
   const { setEnableFooterInput } = useFooterText();
   const { data: user } = useUser();
-  const { data: vinylData } = useVinylCollection();
+  const { data: vinylData, refetch } = useVinylCollection();
   const totalAlbums = vinylData?.length || 0;
 
   const allGenres =
@@ -50,6 +50,7 @@ export default function LayoutRight() {
 
   const handleView = async () => {
     router.push("/collection");
+    refetch();
     setEnableFooterInput(false);
   };
 
@@ -76,6 +77,14 @@ export default function LayoutRight() {
             <p>Collection total: {totalAlbums}</p>
             <p>Top genre: {topGenre}</p>
             <p>Top artist: {topArtist}</p>
+            <ol type="1" className="list-decimal list-inside">
+              <p>Still todo:</p>
+              <li>Edit user name</li>
+              <li>Edit album notes and condition</li>
+              <li>Add user pic</li>
+              <li>Delete albums</li>
+              <li>AI chat integration</li>
+            </ol>
           </div>
         </div>
       </div>
