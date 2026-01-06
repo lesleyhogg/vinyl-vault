@@ -1,3 +1,18 @@
+# :zap: Vinyl Vault :zap:
+### A retro vinyl collection tracking app
+#### React, Typescript, Next.js, Tailwind, OpenAI integration, Supabase
+This app came about not just as a way to keep my skills up, but as a real need I have to track my vinyl collection so that I do not buy duplicates ever again.
+
+I love the look of early 90's computer RPGs like the Ultima series, Zork, and Japanese visual novels like Snatchers, so I added a similar interface with scrolling type.
+
+I use the Discogs API.
+
+This is an ongoing project, so stay tuned for more updates!
+
+https://github.com/user-attachments/assets/de6102a4-2126-4fd1-bfee-590c05c60038
+
+# Boilerplate stuff
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
