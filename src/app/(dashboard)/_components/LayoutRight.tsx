@@ -62,10 +62,16 @@ export default function LayoutRight() {
     <aside className="overflow-y-auto px-4 pb-4 flex flex-col gap-4 bg-green-200">
       <div className="border-4 rounded-lg border-gray-700 w-full h-full">
         <div className="border rounded-lg border-gray-300 w-full h-full">
-          <div className="rounded bg-gray-900 text-green-100 p-8 w-full h-full">
-            <div className="flex flex-col items-center">
-              <div>profile pic goes here</div>
-              <p>{user?.user_metadata.display_name}</p>
+          <div className="rounded bg-gray-900 text-green-100 text-xl p-8 w-full h-full flex flex-col gap-4">
+            <div className="flex flex-col items-center gap-2">
+              <div className="border border-green-100 rounded-xl px-6 py-8 text-center">
+                profile pic
+                <br />
+                goes here
+              </div>
+              <p className="font-semibold">
+                {user?.user_metadata.display_name}
+              </p>
             </div>
             <p>Collection total: {totalAlbums}</p>
             <p>Top genre: {topGenre}</p>

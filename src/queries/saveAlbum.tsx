@@ -7,7 +7,7 @@ export async function saveAlbumToCollection(albumData: any, userId: string) {
     user_id: userId,
     title: albumData.title,
     artist: albumData.artists_sort,
-    release_date: albumData.release_date,
+    release_date: albumData.release_formatted,
     styles: albumData.styles,
     catalog_number: albumData.id,
     cover_image_url: albumData.images?.[0]?.uri,
